@@ -1,0 +1,27 @@
+= spring-boot-thread-local-and-bouncy-castle
+
+This project is a Small Spring boot rest project to demostrate how to use MDC
+and Bouncy Castle in Spring boot applications
+
+== Thread Local in Java and MDC implementation
+
+The ThreadLocal class in Java enables you to create variables that can only be read and written by the same thread. Thus, even if two threads are executing the same code, and the code has a reference to a ThreadLocal variable, then the two threads cannot see each other's ThreadLocal variables.
+
+In this example we are going to create custom String Threadlocal into Spring boot application to demostrate how a Treadlocal class has the same value between request-response servlet lifecycle.
+
+We have created custom servlet filter class named CustomFilter (filter package). This class filter every hhtp call make to the api and add correlationId value into our custom threadlocal class named MyThreadLocal (threadlocal package)
+
+3 tipical layers controller-service-repository was created to log this value to be able to demostrate that it is not neccesary to
+pass the value between method: this value is stored at the same thread so it is accesible for every layers.
+
+image::/images/theadLocal.png?raw=true[Threadlocal class]
+image::/images/filter.png?raw=true[Filter class]
+image::/images/controller_service.png?raw=true[Service class]
+image::/images/repository.png?raw=true[Repository class]
+
+To be able to run the Spring boot application write inside a terminal *mvn spring-boot:run* or if you a pro developer and you use intellij run inside the ide.
+Open you browser and type "http://localhost:8080/person" and your logs will show correlationId value stored inside threadlocal.
+
+image::/images/threadLocalLog.png.png?raw=true[Thread Local log class]
+
+

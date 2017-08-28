@@ -14,7 +14,7 @@ We have created custom servlet filter class named CustomFilter (filter package).
 3 tipical layers controller-service-repository was created to log this value to be able to demostrate that it is not neccesary to
 pass the value between method: this value is stored at the same thread so it is accesible for every layers.
 
-image::/images/theadLocal.png?raw=true[Threadlocal class]
+image::/images/threadLocal.png?raw=true[Threadlocal class]
 image::/images/filter.png?raw=true[Filter class]
 image::/images/controller_service.png?raw=true[Service class]
 image::/images/repository.png?raw=true[Repository class]

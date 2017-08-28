@@ -19,9 +19,37 @@ image::/images/filter.png?raw=true[Filter class]
 image::/images/controller_service.png?raw=true[Service class]
 image::/images/repository.png?raw=true[Repository class]
 
-To be able to run the Spring boot application write inside a terminal *mvn spring-boot:run* or if you a pro developer and you use intellij run inside the ide.
+To be able to run the Spring boot application write inside a terminal`` *mvn spring-boot:run*`` or if you a pro developer and you use intellij run inside the ide.
 Open you browser and type "http://localhost:8080/person" and your logs will be shown with correlationId value stored inside threadlocal.
 
 image::/images/threadLocalLog.png?raw=true[Thread Local log class]
+
+== MDC log4j map
+
+
+MDC in Log4j allows us to fill a map-like structure with pieces of information that are accessible to the appender when the log message is actually written.
+
+The MDC structure is internally attached to the executing thread in the same way a *ThreadLocal variable* would be.
+The pattern of the appender should be obviously changed in order to retrieve the variables stored in the MDC.
+
+So let’s see our Spring boot code to see how to use it inside and Spring boot application.
+Firs of all we have to store the value in the filter class as the same way as we have done with our Mythreadlocal.
+
+image::/images/mdcFilter.png?raw=true[MDC filter class]
+
+It is enough to change the conversion pattern, using the %X{} placeholder for each entry contained in the MDC we would like to be logged:
+
+`logging.pattern.level=correlationId:[%X{correlationId}] %5p`
+
+image::/images/pattern.png?raw=true[MDC filter class]
+
+Now if we start again our Spring boot application logs will be automatic appended inside log:
+
+image::/images/mdcTrace.png?raw=true[MDC filter class]
+
+Obviusly values of thread local and MDC are the same betwwen request but MDC make easier to log custom values inside logs.
+
+
+
 
 

@@ -22,6 +22,6 @@ image::/images/repository.png?raw=true[Repository class]
 To be able to run the Spring boot application write inside a terminal *mvn spring-boot:run* or if you a pro developer and you use intellij run inside the ide.
 Open you browser and type "http://localhost:8080/person" and your logs will show correlationId value stored inside threadlocal.
 
-image::/images/threadLocalLog.png.png?raw=true[Thread Local log class]
+image::/images/threadLocalLog.png?raw=true[Thread Local log class]
 
 

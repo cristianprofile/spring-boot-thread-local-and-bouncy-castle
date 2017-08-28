@@ -47,7 +47,7 @@ Now if we start again our Spring boot application logs will be automatic appende
 
 image::/images/mdcTrace.png?raw=true[MDC filter class]
 
-Obviusly values of thread local and MDC are the same betwwen request but MDC make easier to log custom values inside logs.
+Obviusly values of thread local and MDC are the same between request but MDC make easier to log custom values inside logs.
 
 
 

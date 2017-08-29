@@ -50,6 +50,62 @@ image::/images/mdcTrace.png?raw=true[MDC filter class]
 Obviusly values of thread local and MDC are the same between request but MDC make easier to log custom values inside logs.
 
 
+== Bouncy castle and jasypt
+
+Jasypt is a java library which allows the developer to add basic encryption capabilities to his/her projects with minimum effort, and without the need of having deep knowledge on how cryptography works. It will be used to be able to encript/decript properties in our Spring boot project.
+
+Bouncy Castle is a collection of APIs used in cryptography. It includes APIs for both the Java and the C# programming languages. CE stands for Java Cryptography Extension, is the standard api provided by Java for implementing all encryption decryption techniques . The default encryption provider is SunJCE . To know more about SunJCE encryption you can visit the link:-  http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html
+
+BouncyCastle is one such provider which offers more cipher suites and algorithms. You can find more info about BouncyCastle https://www.bouncycastle.org/java.html
+
+We are going to use jasypt with bouncy castle provider.Lets see in action how to put together  bouncycastle+jasypt+spring-boot:
+
+. Step 1: Dowload jce library (Java  JCE Unlimited Strength Jurisdiction Policy Filesss) and replace your jdk content (/jdkxxxxx/jre/lib/security ) with this 2 new jars ( local_policy.jar and US_export_policy.jar): http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
++
+image::/images/security_jar.png?raw=true[New jce jars]
+
+. Step 2: Add new provider entry into your java.security file (this file is at the same route at your policies jars /jdkxxxxx/jre/lib/security) To install the provider statically you need to add it as an entry to the java.security file which can be found in $JAVA_HOME/jre/lib/security/java.security for the JRE/JDK you are using. Look for a list of lines with security.provider.X where X is some number. At the bottom of the list add the line:
++
+``security.provider.N=org.bouncycastle.jce.provider.BouncyCastleProvider
+``
++
+image::/images/provider_bouncy.png?raw=true[Add new jce provider]
+
+. Step 3: Download the boncy castle jar from https://www.bouncycastle.org/latest_releases.html and put it into your jdk installation. Add the bouncy castle jar to JAVA_HOME \jre\lib\ext\ bcprov-jdk15on-147.jar.
+
+image::/images/bouncy_jar.png?raw=true[Bouncy castle jars]
 
 
+In our project we are using jasypt-spring-boot project (https://github.com/ulisesbocchio/jasypt-spring-boot) to make easier the effort to use bouncy castle in Spring boot application. Like every components in Spring boot
+application encription/decription files will be configured by our application.properties file:
 
+
+`jasypt.encryptor.password=admin
+jasypt.encryptor.algorithm=PBEWITHSHA256AND128BITAES-CBC-BC
+jasypt.encryptor.keyObtentionIterations=1000
+jasypt.encryptor.poolSize=1
+jasypt.encryptor.providerName=BC
+jasypt.encryptor.saltGeneratorClassname=org.jasypt.salt.RandomSaltGenerator
+jasypt.encryptor.stringOutputType=base64`
+
+image::/images/boot_configuration_jassypt.png?raw=true[Boot Configuration Jassypt]
+
+When an encripted property is needed in application we will use jassypt library.Dowload it from http://www.jasypt.org/download.html from sourceforge https://sourceforge.net/projects/jasypt/files/jasypt/jasypt%201.9.2/.
+Unzip your zip file into any directory of your system. In bin directory you will have encript.sh file. Run it with this command:
+
+``./encrypt.sh input=admin123 password=admin algorithm=PBEWITHSHA256AND128BITAES-CBC-BC providerClassName=org.bouncycastle.jce.provider.BouncyCastleProvider
+``
+
+image::/images/encript_properties.png?raw=true[Boot Configuration Jassypt]
+
+Note: your password must be the same that you have defined in application.properties file
+
+
+Your output is your property encripted.Put this value in a property and inject it with @Autowired annotation. Your property value will
+be decripted in automatic way and you could use it.
+
+
+image::/images/encripted_property.png?raw=true[ Encripted property]
+
+
+image::/images/run_time_encripted.png?raw=true[ Encripted property]

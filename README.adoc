@@ -39,7 +39,9 @@ image::/images/mdcFilter.png?raw=true[MDC filter class]
 
 It is enough to change the conversion pattern, using the %X{} placeholder for each entry contained in the MDC we would like to be logged:
 
-`logging.pattern.level=correlationId:[%X{correlationId}] %5p`
+....
+logging.pattern.level=correlationId:[%X{correlationId}] %5p
+....
 
 image::/images/pattern.png?raw=true[MDC filter class]
 
@@ -79,22 +81,24 @@ image::/images/bouncy_jar.png?raw=true[Bouncy castle jars]
 In our project we are using jasypt-spring-boot project (https://github.com/ulisesbocchio/jasypt-spring-boot) to make easier the effort to use bouncy castle in Spring boot application. Like every components in Spring boot
 application encription/decription files will be configured by our application.properties file:
 
-
-`jasypt.encryptor.password=admin
+....
+jasypt.encryptor.password=admin
 jasypt.encryptor.algorithm=PBEWITHSHA256AND128BITAES-CBC-BC
 jasypt.encryptor.keyObtentionIterations=1000
 jasypt.encryptor.poolSize=1
 jasypt.encryptor.providerName=BC
 jasypt.encryptor.saltGeneratorClassname=org.jasypt.salt.RandomSaltGenerator
-jasypt.encryptor.stringOutputType=base64`
+jasypt.encryptor.stringOutputType=base64
+....
 
 image::/images/boot_configuration_jassypt.png?raw=true[Boot Configuration Jassypt]
 
 When an encripted property is needed in application we will use jassypt library.Dowload it from http://www.jasypt.org/download.html from sourceforge https://sourceforge.net/projects/jasypt/files/jasypt/jasypt%201.9.2/.
 Unzip your zip file into any directory of your system. In bin directory you will have encript.sh file. Run it with this command:
 
-``./encrypt.sh input=admin123 password=admin algorithm=PBEWITHSHA256AND128BITAES-CBC-BC providerClassName=org.bouncycastle.jce.provider.BouncyCastleProvider
-``
+....
+./encrypt.sh input=admin123 password=admin algorithm=PBEWITHSHA256AND128BITAES-CBC-BC providerClassName=org.bouncycastle.jce.provider.BouncyCastleProvider
+....
 
 image::/images/encript_properties.png?raw=true[Boot Configuration Jassypt]
 

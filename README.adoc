@@ -94,7 +94,10 @@ jasypt.encryptor.stringOutputType=base64
 image::/images/boot_configuration_jassypt.png?raw=true[Boot Configuration Jassypt]
 
 When an encripted property is needed in application we will use jassypt library.Dowload it from http://www.jasypt.org/download.html from sourceforge https://sourceforge.net/projects/jasypt/files/jasypt/jasypt%201.9.2/.
-Unzip your zip file into any directory of your system. In bin directory you will have encript.sh file. Run it with this command:
+Unzip your zip file into any directory of your system.
+Download bouncy castle's jar from https://www.bouncycastle.org/latest_releases.html and copy it into lib directory (your unzip directory plus /lib)
+
+In bin directory you will have encript.sh file. Run it with this command:
 
 ....
 ./encrypt.sh input=admin123 password=admin algorithm=PBEWITHSHA256AND128BITAES-CBC-BC providerClassName=org.bouncycastle.jce.provider.BouncyCastleProvider
